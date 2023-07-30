@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inheritance and Prototype</title>
+    <style>
+        body{
+            background-color: skyblue;
+        }
+    </style>
+</head>
+<body>
+    <h1>Inheritance and Prototype</h1>
+    <h3>Que.1: Create 2 objects - parent and child. Attach methods to parent and use those
+         methods in child object using parents prototype ?
+    </h3>
+    <h3>Ans: <pre>
+        function Parent(name) {
+            this.name = name;
+          }
+          
+          Parent.prototype.greet = function () {
+            console.log(`Hello, I am ${this.name}.`);
+          };
+          
+          // Step 2: Create the Child object and set its prototype to the Parent object.
+          function Child(name, age) {
+            Parent.call(this, name); // Call the Parent constructor to set the name property
+            this.age = age;
+          }
+          
+          Child.prototype = Object.create(Parent.prototype);
+          Child.prototype.constructor = Child;
+          
+          // Step 3: Use the methods from the Parent object in the Child object.
+          Child.prototype.introduce = function () {
+            console.log(`Hello, I am ${this.name} and I am ${this.age} years old.`);
+          };
+          
+          // Create instances of Parent and Child objects
+          const parent = new Parent("John");
+          const child = new Child("Alice", 5);
+          
+          // Use the methods
+          parent.greet(); 
+          child.greet(); 
+          child.introduce();  
+
+    Output: Hello, I am John.
+    Hello, I am Alice.
+    Hello, I am Alice and I am 5 years old.
+    </pre>
+    Reason: Create the Parent object and add methods to its prototype then
+    Create the Child object and set its prototype to the Parent object then 
+    Use the methods from the Parent object in the Child object.
+    Create instances of Parent and Child objects
+    then  Use the methods .
+</h3>
+    <h3>Que.2: Write code to explain prototype chaining ?</h3>
+    <h3>Ans:  Prototype chaining is a fundamental concept in JavaScript that
+         allows objects to inherit properties and methods from their prototype objects,
+          forming a chain of prototypes. It enables object-oriented programming in JavaScript by providing a way to share
+         functionality between objects and create a hierarchical relationship between them.
+        <pre>
+            function Parent(name) {
+                this.name = name;
+              }
+              
+              Parent.prototype.greet = function () {
+                console.log(`Hello, I am ${this.name}.`);
+              };
+              
+              
+              function Child(name, age) {
+                Parent.call(this, name); // Call the Parent constructor to set the name property
+                this.age = age;
+              }
+              
+              Child.prototype = Object.create(Parent.prototype);
+              Child.prototype.constructor = Child;
+              
+              
+              Child.prototype.introduce = function () {
+                console.log(`Hello, I am ${this.name} and I am ${this.age} years old.`);
+              };
+              
+             
+              const parent = new Parent("John");
+              const child = new Child("Alice", 5);
+              
+              // Use the methods
+              parent.greet(); 
+              child.greet(); 
+              child.introduce();  
+    
+        Output: Hello, I am John.
+        Hello, I am Alice.
+        Hello, I am Alice and I am 5 years old.
+    <pre>
+        Reason:  Reason: Create the Parent object and add methods to its prototype then
+        Create the Child object and set its prototype to the Parent object then 
+        Use the methods from the Parent object in the Child object.
+        Create instances of Parent and Child objects
+        then  Use the methods .
+    </h3>
+    <h3>Que.3: Add a method to calculate sum of all elements in 
+        Array in array's prototype, use that method to calculate sum for multiple arrays ?
+    </h3>
+    <h3>Ans:
+        <pre>
+            
+Array.prototype.sum = function () {
+  
+  return this.reduce((acc, curr) => acc + curr, 0);
+};
+
+const array1 = [1, 2, 3, 4, 5];
+const array2 = [10, 20, 30];
+const array3 = [100, 200, 300, 400];
+
+const sum1 = array1.sum();
+const sum2 = array2.sum();
+const sum3 = array3.sum();
+
+console.log("Sum of array1:", sum1);  
+console.log("Sum of array2:", sum2); 
+console.log("Sum of array3:", sum3);  
+        </pre>
+    Output:Sum of array1: 15
+    Sum of array1: 60
+    Sum of array3: 1000
+    Reason : Add the sum method to the Array.prototype. Use reduce to calculate the sum of all elements in the array .
+    Use the sum method on different arrays to calculate their sums. Sum of array1: 15 in next line 60 then 1000.
+    </h3>
+    <h3>Que.4: Write a JavaScript function to retrieve all the names of object's own and inherited properties ?</h3>
+    <h3>Ans:
+        <pre>
+          
+              
+              // Parent object
+              function Parent() {
+                this.parentProperty = 'I am a parent property';
+              }
+              
+              Parent.prototype.parentMethod = function () {
+                console.log('This is a parent method');
+              };
+              
+              // Child object
+              function Child() {
+                this.childProperty = 'I am a child property';
+              }
+              
+              Child.prototype = Object.create(Parent.prototype);
+              Child.prototype.constructor = Child;
+              Child.prototype.childMethod = function () {
+                console.log('This is a child method');
+              };
+              
+              const childObj = new Child();
+              
+              const allPropertyNames = getAllPropertyNames(childObj);
+              console.log(allPropertyNames);
+        </pre>
+    Reason:  the getAllPropertyNames function takes an object as an argument and 
+    returns an array containing the names of all the object's own properties and inherited properties. 
+    The function uses a recursive approach to traverse the prototype chain and collects property names 
+    using Object.getOwnPropertyNames(). The Set object is used to remove duplicate property names from the result
+    </h3>    
+</body>
+</html>
